@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+#task{
+    
+    justify-content: center;
+    margin-top: 210px;
+    display: grid;
+    align-items: center;
+    
+}
+#task1{
+    justify-content: center; 
+    
+}
+#task2{
+    text-align: center;
+    width: 500px;
+    justify-content: center;
+    display: grid;
+    align-items: center;
+    margin-left: 425px;
+}
+</style>
+
+<div>
+{% if messages %}
+    {% for msg in messages %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ msg }}</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<div id="task">
+   <form action="" method="POST" style="width: 350px; ">
+        {% csrf_token %}
+    {{ form.task }} <br>
+    
+    <div id="task1">
+        <input type="submit" value="Go" name="button" class="btn btn-success">
+        
+    </div>
+    </form>
+</div>
+</div>
+
+<div>
+    <h1 class='text-center'>Task</h1>
+    {% if task %}
+        {% for tsk in task  %}
+        <div class="bg-light shadow pt-2 mt-2 p-5" id="task2" >
+            <h1>{{ forloop.counter }}.{{ tsk }}</h1> <hr>
+                <div style="margin-left:200px">
+                    <a href="{% url 'taskupdate' tsk.id %}" style="text-decoration: none; color: black; ">
+                        <i class="fa-solid fa-pen-to-square me-2" ></i></a>
+
+                    <a href="{% url 'deletetask' tsk.id %}" style="text-decoration: none; color: black;">
+                        <i class="fa-solid fa-trash"></i></a>
+                </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div>
+            <h1 style="margin-left:540px">No task is here.</h1>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}
